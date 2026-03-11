@@ -61,30 +61,30 @@ background-image:url("img/bg3.jpg");
 }
 
 .page2{
-background-image:url("img/bgsampul.jpg");
+background-image:url("img/bg5.jpg");
 }
 
 .page3{
-background-image:url("img/galery9.jpg");
+background-image:url("img/bg3.jpg");
 }
 
 .page4{
-background-image:url("img/galery4.jpg");
+background-image:url("img/bg4.jpg");
 }
 
 .page5{
-background-image:url("img/galery7.jpg");
+background-image:url("img/bg5.jpg");
 }
 .page6{
-background-image:url("img/galery2.jpg");
+background-image:url("img/bg3.jpg");
 }
 
 .page7{
-background-image:url("img/galery1.jpg");
+background-image:url("img/bg4.jpg");
 }
 
 .page8{
-background-image:url("img/galery1.jpg");
+background-image:url("img/bg5.jpg");
 }
 /* SECTION */
 
@@ -651,6 +651,80 @@ font-weight:bold;
 letter-spacing:2px;
 color: #000;
 }
+
+.countdown{
+    display:flex;
+    justify-content:center;
+    gap:2px;
+    margin-top:20px;
+    flex-wrap:wrap;
+}
+
+.box{
+    background:white;
+    color:#333;
+    width:60px;
+    height:60px;              /* tambahkan tinggi */
+    border-radius:8px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+
+    display:flex;             /* tambahkan */
+    flex-direction:column;    /* tambahkan */
+    justify-content:center;   /* center vertikal */
+    align-items:center;       /* center horizontal */
+}
+
+.box h3{
+    margin:0;
+    font-size:18px;
+	color:#d4af37;
+}
+
+.box span{
+    font-size:13px;
+    color:#777;
+}
+.nama-mempelai{
+  font-family:'Great Vibes', cursive;
+  font-size:40px;
+  background:linear-gradient(
+    120deg,
+    #c9a24d 30%,
+    #fff2c2 50%,
+    #c9a24d 70%
+  );
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:shimmer 3s linear infinite;
+}
+.gold-text {
+  font-family: 'Playfair Display', serif; /* bisa ganti font */
+  font-size: 48px;
+  font-weight: 600;
+  text-align: center;
+
+  /* WARNA EMAS */
+  background: linear-gradient(
+    120deg,
+    #c9a23f,
+    #ffd87a,
+    #fff3c1,
+    #d4af37,
+    #c9a23f
+  );
+  background-size: 200% auto;
+
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+
+  /* CAHAYA HALUS */
+  text-shadow:
+    0 0 6px rgba(255, 215, 100, 0.6),
+    0 0 12px rgba(255, 215, 100, 0.4);
+}
+
 </style>
 </head>
 
@@ -664,7 +738,7 @@ color: #000;
 <div class="photo-frame">
     <img src="img/fotocover.jpg" alt="Foto Pengantin">
 </div><br>
-<h1>Ayu & Budi</h1>
+<h1 class="nama-mempelai">Ayu & Budi</h1>
 
 <p>Kepada Yth</p>
 
@@ -824,7 +898,7 @@ tanda-tanda (kebesaran Allah) bagi kaum yang berpikir(QS. Ar-Rum : 21)</p>
 <!-- SECTION 6 -->
 
 <section class="page6">
-  <button id="btnPesan" onclick="bukaForm()">Kirim Ucapan</button>
+  <button id="btnPesan" onclick="bukaForm()">💬 Kirim Ucapan</button>
   <div id="popupForm" class="popup">
 
     <div class="popup-content">
@@ -869,12 +943,12 @@ tanda-tanda (kebesaran Allah) bagi kaum yang berpikir(QS. Ar-Rum : 21)</p>
   
   <br>
   
- 
+  <h3>Ayu & Budi</h3>
   <p><em>Doa restu Anda merupakan karunia yang sangat berarti bagi kami.  
     Namun jika memberi adalah ungkapan tanda kasih, Anda dapat memberi kado secara cashless</em></p>
     <br><br>
   
-  <button class="btn-gift" onclick="bukaGift()">Berikan Gift</button>
+  <button class="btn-gift" onclick="bukaGift()">🎁 --Kirim Gift--</button>
   <div id="popupGift" class="popup">
 
     <div class="popup-content">
@@ -893,6 +967,27 @@ tanda-tanda (kebesaran Allah) bagi kaum yang berpikir(QS. Ar-Rum : 21)</p>
     </div>
     
     </div>
+    <br>
+    <h2>Menuju Hari Bahagia</h2>
+
+<div class="countdown">
+    <div class="box">
+        <h3 id="hari">0</h3>
+        <span>Hari</span>
+    </div>
+    <div class="box">
+        <h3 id="jam">0</h3>
+        <span>Jam</span>
+    </div>
+    <div class="box">
+        <h3 id="menit">0</h3>
+        <span>Menit</span>
+    </div>
+    <div class="box">
+        <h3 id="detik">0</h3>
+        <span>Detik</span>
+    </div>
+</div>
   </section>
 
   <!-- SECTION 8 -->
@@ -950,6 +1045,31 @@ tanda-tanda (kebesaran Allah) bagi kaum yang berpikir(QS. Ar-Rum : 21)</p>
 
 
 <script>
+
+  // Set tanggal tujuan (WIB)
+const targetDate = new Date("April 4, 2050 09:00:00 GMT+0700").getTime();
+
+const countdown = setInterval(function(){
+
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+
+    const hari = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const jam = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const menit = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const detik = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("hari").innerHTML = hari;
+    document.getElementById("jam").innerHTML = jam;
+    document.getElementById("menit").innerHTML = menit;
+    document.getElementById("detik").innerHTML = detik;
+
+    if(distance < 0){
+        clearInterval(countdown);
+        document.querySelector(".countdown").innerHTML = "Acara Telah Dimulai 🎉";
+    }
+
+}, 1000);
 
 function bukaGift(){
 document.getElementById("popupGift").style.display="block";
@@ -1217,5 +1337,4 @@ music.pause();
 </script>
 
 </body>
-
 </html>
